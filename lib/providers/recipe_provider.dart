@@ -54,7 +54,7 @@ class RecipeProvider {
     }).toList();
   }
 
-  Recipe? getById(int id) => _recipes.firstWhere((r) => r.id == id, orElse: () => null);
+  Recipe? getById(int id) => _recipes.firstWhere((r) => r.id == id);
 
   void addRecipe(Recipe recipe) {
     final maxId = _recipes.isEmpty

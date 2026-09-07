@@ -41,7 +41,7 @@ class _SearchBarState extends State<SearchBar> {
         color: isDark ? Colors.grey[800] : Colors.white,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: isDark ? Colors.grey[700] : Colors.grey[300],
+          color: isDark ? Colors.grey[700]! : Colors.grey[300]!,
         ),
       ),
       child: TextField(

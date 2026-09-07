@@ -4,18 +4,6 @@ import 'package:multi_screen_app/models/recipe.dart';
 import 'package:multi_screen_app/providers/recipe_provider.dart';
 import 'package:multi_screen_app/widgets/recipe_card.dart';
 
-class RecipeDetailScreen extends StatefulWidget {
-  final int recipeId;
-
-  const RecipeDetailScreen({
-    super.key,
-    required this.recipeId,
-  });
-
-  @override
-  State<RecipeDetailScreen> createState() => _RecipeDetailScreenState;
-}
-
 class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
   late Recipe _recipe;
   final RecipeProvider _provider = RecipeProvider();
@@ -39,7 +27,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
   void _toggleFavorite() {
     setState(() {
       _isFavorite = !_isFavorite;
-      _recipe.isFavorite = _isFavorite;
+      _recipe = _recipe.copyWith(isFavorite: _isFavorite);
     });
   }
 
@@ -155,4 +143,17 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
       ),
     );
   }
+}
+
+class RecipeDetailScreen extends StatefulWidget {
+  final int recipeId;
+
+  const RecipeDetailScreen({
+    super.key,
+    required this.recipeId,
+  });
+
+  @override
+  // ignore: return_of_invalid_type
+  State<RecipeDetailScreen> createState() => _RecipeDetailScreenState as State<RecipeDetailScreen>;
 }

@@ -3,13 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:multi_screen_app/models/recipe.dart';
 import 'package:multi_screen_app/providers/recipe_provider.dart';
 
-class AddRecipeScreen extends StatefulWidget {
-  const AddRecipeScreen({super.key});
-
-  @override
-  State<AddRecipeScreen> createState() => _AddRecipeScreenState;
-}
-
 class _AddRecipeScreenState extends State<AddRecipeScreen> {
   final _formKey = GlobalKey<FormState>();
   final RecipeProvider _provider = RecipeProvider();
@@ -139,7 +132,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                     final newRecipe = Recipe(
                       id: _provider.recipes.isEmpty
                           ? _provider.recipes.length + 1
-                          : _provider.recipes.map((r) => r.id).reduce((a, b) => a).max() + 1,
+                          : _provider.recipes.map((r) => r.id).reduce((a, b) => a > b ? a : b) + 1,
                       title: _titleController.text,
                       description: _descriptionController.text,
                       imageUrl: _imageUrl.isNotEmpty ? _imageUrl
@@ -169,4 +162,12 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
       ),
     );
   }
+}
+
+class AddRecipeScreen extends StatefulWidget {
+  const AddRecipeScreen({super.key});
+
+  @override
+  // ignore: return_of_invalid_type
+  State<AddRecipeScreen> createState() => _AddRecipeScreenState as State<AddRecipeScreen>;
 }

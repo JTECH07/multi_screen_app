@@ -2,15 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:multi_screen_app/models/recipe.dart';
 import 'package:multi_screen_app/providers/recipe_provider.dart';
+import 'package:multi_screen_app/widgets/search_bar.dart' as search_bar;
 import 'package:multi_screen_app/widgets/recipe_card.dart';
-import 'package:multi_screen_app/widgets/search_bar.dart';
-
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState;
-}
 
 class _HomeScreenState extends State<HomeScreen> {
   final RecipeProvider _provider = RecipeProvider();
@@ -38,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Column(
         children: [
-          SearchBar(
+          search_bar.SearchBar(
             onChanged: (query) {
               setState(() => _searchQuery = query);
             },
@@ -72,12 +65,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 : ListView.builder(
                     itemCount: displayedRecipes.length,
                     itemBuilder: (context, index) {
-                      final recipe = displayedRecipes[index];
+                      var recipe = displayedRecipes[index];
                       return RecipeCard(
                         key: Key('recipe_${recipe.id}'),
                         recipe: recipe,
                         onFavoriteToggle: () => setState(
-                          () => recipe.isFavorite = !recipe.isFavorite,
+                          () => recipe = recipe.copyWith(isFavorite: !recipe.isFavorite),
                         ),
                       );
                     },
@@ -87,4 +80,12 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+}
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  // ignore: return_of_invalid_type
+  State<HomeScreen> createState() => _HomeScreenState as State<HomeScreen>;
 }

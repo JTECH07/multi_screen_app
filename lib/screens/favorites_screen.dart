@@ -4,14 +4,7 @@ import 'package:multi_screen_app/models/recipe.dart';
 import 'package:multi_screen_app/providers/recipe_provider.dart';
 import 'package:multi_screen_app/widgets/recipe_card.dart';
 
-class FavoritesScreen extends StatefulWidget {
-  const FavoritesScreen({super.key});
-
-  @override
-  State<FavoritesScreen> createState() => _FavoritesScreenState;
-}
-
-class _FavoritesScreenState extends Widget<FavoritesScreen> {
+class _FavoritesScreenState extends State<FavoritesScreen> {
   final RecipeProvider _provider = RecipeProvider();
 
   @override
@@ -38,13 +31,13 @@ class _FavoritesScreenState extends Widget<FavoritesScreen> {
           : ListView.builder(
               itemCount: favorites.length,
               itemBuilder: (context, index) {
-                final recipe = favorites[index];
+                var recipe = favorites[index];
                 return Dismissible(
                   key: Key('fav_${recipe.id}'),
                   direction: DismissDirection.endToStart,
                   onDismissed: (_) {
                     setState(() {
-                      recipe.isFavorite = false;
+                      recipe = recipe.copyWith(isFavorite: false);
                     });
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Retiré des favoris')),
@@ -66,4 +59,12 @@ class _FavoritesScreenState extends Widget<FavoritesScreen> {
             ),
     );
   }
+}
+
+class FavoritesScreen extends StatefulWidget {
+  const FavoritesScreen({super.key});
+
+  @override
+  // ignore: return_of_invalid_type
+  State<FavoritesScreen> createState() => _FavoritesScreenState as State<FavoritesScreen>;
 }
